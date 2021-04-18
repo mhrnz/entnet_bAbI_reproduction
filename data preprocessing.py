@@ -144,3 +144,35 @@ def extract_keys(paragraphs,dictionary, n=20):
       print('j:',j)
     
   return keys,keys_mask
+
+def generate_data(file_path):
+
+    parsed_data=parse_stories(file_path)
+    vocab, token_to_id=get_tokenizer(parsed_data)
+
+    vocab_size=len(vocab)
+
+    story_ids,max_sent_num,max_sent_len=tokenize_stories(parsed_data,token_to_id)
+    paragraphs, paragraphs_mask, questions, answers=convert_to_tensors(story_ids, max_sent_num, max_sent_len)
+
+    config_dic={}
+    config_dic['paragraphs_num']=paragraphs.shape[0]
+    config_dic['max_sent_num']=max_sent_num
+    config_dic['max_sent_len']=max_sent_len
+    config_dic['batch_size']=32
+    config_dic['epochs_num']=200
+    config_dic['initial_lr']=0.01
+    config_dic['max_entity_num']=20
+    config_dic['vocab_size']=vocab_size
+    config_dic['embedding_dim']=100
+    config_dic['val_split']=0.125
+
+
+    data=preprocess(file_path)
+    contexts=[]
+    for context, question, answer, _ in data:
+        contexts.append(" ".join(context))
+        
+    keys,keys_mask=extract_keys(contexts, token_to_id)
+   
+    return paragraphs, paragraphs_mask, questions, answers, keys, keys_mask, config
