@@ -239,6 +239,11 @@ def simple_entity_network(inputs, keys, entity_cell=None,
 class BasicRecurrentEntityEncoder(tf.keras.layers.Layer):
     def __init__(self, embedding_matrix, vocab_size, max_entity_num=None, entity_embedding_dim=None, entity_cell=None, name=None,
                  **kwargs):
+
+	'''
+	The embedding_matrix is a matrix of shape [vocab_size,100] which contains embeddings of vocabs in the dataset 
+    	selected from the GloVe word embeddings.
+	'''
         if name is None:
             name = 'BasicRecurrentEntityEncoder'
         super().__init__(name=name)
