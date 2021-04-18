@@ -1,3 +1,8 @@
+import spacy
+import nltk
+nltk.download('punkt')
+from nltk.tokenize import word_tokenize
+
 def preprocess(file):
     """
     Description:
@@ -31,7 +36,6 @@ def preprocess(file):
 
 PAD_TOKEN = '_PAD'
 PAD_ID = 0
-from nltk.tokenize import word_tokenize
 
 def tokenize(sentence):
     "Tokenize a string by splitting on non-word characters and stripping whitespace."
@@ -95,12 +99,11 @@ def tokenize_stories(parsed_data,token_to_id):
         if len(query)>max_sent_len:
           max_sent_len=len(query)
         answer = token_to_id[answer]
-        story_ids.append((context[max(0,len(context)-130):], query, answer))
+        story_ids.append((context[max(0,len(context)-70):], query, answer))
     return story_ids, max_sent_num, max_sent_len
   
 def convert_to_tensors(tokenized_data, max_sent_num, max_sent_len):
   prgrphs_num=len(tokenized_data)
-  print('prgrphs_num', len(tokenized_data))
   paragraphs=np.zeros(shape=[prgrphs_num, max_sent_num, max_sent_len],dtype=np.int32)
   paragraphs_mask=np.zeros(shape=[prgrphs_num, max_sent_num, max_sent_len],dtype=np.bool)
   questions=np.zeros(shape=[prgrphs_num, max_sent_len], dtype=np.int32)
@@ -118,7 +121,6 @@ def convert_to_tensors(tokenized_data, max_sent_num, max_sent_len):
   return paragraphs, paragraphs_mask, questions, answers
   
 
-import spacy
 
 def extract_keys(paragraphs,dictionary, n=20):
 
@@ -135,13 +137,12 @@ def extract_keys(paragraphs,dictionary, n=20):
         if tok.dep_ in keys_tags:
             words_ind.add(dictionary[str(tok)])
             cnt+=1
-        if cnt==20:
+        if cnt==n:
             break
+
     keys[j,:len(words_ind)]= list(words_ind)
     keys_mask[j,:len(words_ind)]=np.ones([len(words_ind)],np.bool)
     j=j+1
-    if j%1000==0:
-      print('j:',j)
     
   return keys,keys_mask
 
