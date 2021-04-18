@@ -5,7 +5,7 @@ This repository contains implementation of the [Tracking the World State with Re
 
 # Dataset
 
-We evaluated Recurrent Entity Networks on version 1.2 of the bAbI dataset with **10k** samples, which you can download from [here](https://research.fb.com/downloads/babi/).
+We evaluated Recurrent Entity Networks on version 1.2 of the **bAbI dataset** with 10k samples, which you can download from [here](https://research.fb.com/downloads/babi/).
 
 # References
 [1] Mikael Henaff. & Jason Weston. & Arthur Szlam & Antoine Bordes & Yann LeCun (1995) [Tracking the
