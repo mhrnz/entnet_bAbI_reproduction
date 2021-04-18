@@ -10,3 +10,5 @@ We evaluated Recurrent Entity Networks on version 1.2 of the **bAbI dataset** wi
 # References
 [1] Mikael Henaff. & Jason Weston. & Arthur Szlam & Antoine Bordes & Yann LeCun (1995) [Tracking the
 World State with Recurrent Entity Networks](https://arxiv.org/abs/1612.03969)., ICLR 2017
+
+[2] Part of the data preprocessing code is borrowed from [here] (https://github.com/jimfleming/recurrent-entity-networks/blob/master/entity_networks/prep_data.py)
