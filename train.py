@@ -78,7 +78,7 @@ def train(prgrphs, prgrphs_mask, questions, answers, keys, keys_mask,  embedding
       adam = tf.keras.optimizers.Adam(lr=learning_rate)
       model.compile(optimizer=adam,
                     loss=calculate_loss,
-                    clip_gradients=40,
+                    clip_gradients=0.05,
                     metrics=['accuracy'])
 
       cp_callback = tf.keras.callbacks.ModelCheckpoint(save_path,
